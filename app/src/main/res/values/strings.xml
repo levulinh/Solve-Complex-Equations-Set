@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Hệ Phương Trình Phức</string>
+    <string name="tab_1">3 Vars</string>
+    <string name="tab_2">2 Vars</string>
+    <string name="tab_3">Thông tin</string>
+    <string name="tab_4">Test</string>
+    <string name="tab_5">Back</string>
+
+    <string name="title_activity_splash_screen">Hệ Phương Trình Phức</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="item_4_vars">4 Vars</string>
+</resources>
