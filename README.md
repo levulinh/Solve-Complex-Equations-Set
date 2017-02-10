@@ -33,3 +33,20 @@ z.multiply(z1);
 z.divide(re);
 z.divide(z1);
 ```
+See more at [ComplexNumber.class!](https://github.com/levulinh/Solve-Complex-Equations-Set/blob/master/app/src/main/java/com/mandevices/complexEquationsSet/model/ComplexNumber.java)<br>
+
+To clone a ComplexNumber object, use `copyFrom(ComplexNumber z)` method.<br>
+For example:
+```java
+//clone value of z1 to z
+ComplexNumber z = new ComplexNumber();
+z.copyFrom(z1);
+```
+
+__Matrix22, Matrix33, Matrix44 classes__
+
+These objects take a two-dimension array of ComplexNumber as the argument.<br>
+Method `Matrix22.det()` return a ComplexNumber that is the det of the Matrix. similar to Matrix33 and Matrix44.
+
+##That's it, have fun##
+
