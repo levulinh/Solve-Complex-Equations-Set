@@ -10,4 +10,9 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="item_4_vars">4 Vars</string>
+    <string name="solve_three_var_equation_set">Giải hệ phức 3 ẩn</string>
+    <string name="solve_2_equa_set">Giải hệ phức 2 ẩn</string>
+    <string name="solve_3_equa_set">Giải hệ phức 3 ẩn</string>
+    <string name="solve_4_equa_set">Giải hệ phức 4 ẩn</string>
+    <string name="info">Thông tin</string>
 </resources>

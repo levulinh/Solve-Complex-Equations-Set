@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,7 +18,6 @@ import android.view.Window;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
-import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 
 import java.util.ArrayList;
 
@@ -44,15 +42,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Giải hệ phức 3 ẩn");
+        toolbar.setTitle(R.string.solve_three_var_equation_set);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        //getSupportActionBar().setIcon(R.mipmap.ic_launcher);
-
-//        Slide slideTransition = new Slide();
-//        slideTransition.setSlideEdge(Gravity.LEFT);
-//        slideTransition.setDuration(500);
-//        getWindow().setEnterTransition(slideTransition);
 
         initUI();
     }
@@ -80,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.addItems(bottomNavigationItems);
 
         bottomNavigation.manageFloatingActionButtonBehavior(fab);
+        bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
         bottomNavigation.setColored(true);
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
@@ -97,15 +90,15 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (position == 0) {
-                    getSupportActionBar().setTitle("Giải hệ phức 2 ẩn");
+                    getSupportActionBar().setTitle(R.string.solve_2_equa_set);
                 } else if (position == 1) {
-                    toolbar.setTitle("Giải hệ phức 3 ẩn");
+                    toolbar.setTitle(R.string.solve_3_equa_set);
                     bottomNavigation.setNotification("", 1);
                 } else if (position == 2) {
-                    toolbar.setTitle("Giải hệ phức 4 ẩn");
+                    toolbar.setTitle(R.string.solve_4_equa_set);
                     bottomNavigation.setNotification("", 1);
                 } else
-                    toolbar.setTitle("Thông tin");
+                    toolbar.setTitle(R.string.info);
 
                 viewPager.setCurrentItem(position, false);
                 currentFragment = adapter.getCurrentFragment();
@@ -117,16 +110,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setOffscreenPageLimit(4);
         adapter = new MyViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
-
-        AHNotification notification = new AHNotification.Builder()
-                .setText(":)")
-                .setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.color_notification_back))
-                .setTextColor(ContextCompat.getColor(MainActivity.this, R.color.color_notification_text))
-                .build();
-        //bottomNavigation.setNotification(notification, 1);
-//        Snackbar.make(bottomNavigation, "Snackbar with bottom navigation",
-//                Snackbar.LENGTH_SHORT).show();
-
         currentFragment = adapter.getCurrentFragment();
     }
 
