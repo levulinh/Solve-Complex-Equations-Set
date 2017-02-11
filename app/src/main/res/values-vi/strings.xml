@@ -9,7 +9,7 @@
     <string name="solve_2_equa_set">Hệ phương trình 2 ẩn</string>
     <string name="solve_3_equa_set">Hệ phương trình 3 ẩn</string>
     <string name="solve_4_equa_set">Hệ phương trình 4 ẩn</string>
-    <string name="info">Thông tin</string>
+    <string name="info">Thông tin</string>fd
     <string name="solve">Giải</string>
     <string name="input_instruction">Nhập các hệ số dưới dạng số phức</string>
     <string name="txt_result">Kết quả</string>
@@ -24,4 +24,9 @@
     <string name="hold_to_clear">Giữ để xóa hết</string>
     <string name="item_4_vars">4 Ẩn</string>
     <string name="solve_three_var_equation_set">Hệ phương trình 3 ẩn</string>
+    <string name="about_author">Về tác giả</string>
+    <string name="settings">Cài đặt</string>
+    <string name="author_info">Thông tin tác giả</string>
+    <string name="author_infor_content">Tác giả: Lê Vũ Linh\nĐại Học Bách Khoa Hà Nội\nCTTT- Điện Điện tử K59</string>
+    <string name="close">Đóng</string>
 </resources>

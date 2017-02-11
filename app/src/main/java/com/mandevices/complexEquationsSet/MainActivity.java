@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigation.manageFloatingActionButtonBehavior(floatingActionButton);
         bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
-        bottomNavigation.setColored(true);
+        //bottomNavigation.setColored(true);
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             LayoutInflater inflater = MainActivity.this.getLayoutInflater();
             builder.setView(inflater.inflate(R.layout.dialog_layout, null));
-            builder.setPositiveButton("Đóng", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
@@ -171,11 +171,11 @@ public class MainActivity extends AppCompatActivity {
             TextView txt_title = (TextView) dialog.findViewById(R.id.txt_title);
             TextView txt_content = (TextView) dialog.findViewById(R.id.txt_content);
 
-            txt_title.setText("Thông tin tác giả");
+            txt_title.setText(R.string.author_info);
             txt_title.setBackgroundColor(getResources().getColor(R.color.buttonNormal));
-            txt_content.setText("Tác giả: Lê Vũ Linh\n" +
-                    "CTTT Điện-Điện Tử K59\n" +
-                    "ĐH Bách Khoa HN");
+            txt_content.setText(getString(R.string.author_infor_content));
+        }else {
+            //TODO: lead to the setting menu
         }
         return true;
     }

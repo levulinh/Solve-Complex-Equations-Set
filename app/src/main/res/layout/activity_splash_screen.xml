@@ -19,14 +19,14 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_splash"
+            app:srcCompat="@drawable/calculator"
             android:id="@+id/imageView"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_vertical|center"
-            android:layout_marginTop="50dp" />
+            android:layout_marginTop="50dp"
+            android:layout_height="120dp"
+            android:layout_width="120dp" />
 
         <TextView
             android:text="Giải hệ phương trình\nsố phức"
@@ -46,10 +46,19 @@
     <TextView
         android:text="Lê Vũ Linh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/textView9"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:gravity="bottom" />
+        android:gravity="bottom"
+        android:layout_marginTop="30dp" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="15dp" />
 
 </LinearLayout>

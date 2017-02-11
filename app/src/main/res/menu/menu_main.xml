@@ -2,6 +2,8 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Về tác giả"
+    <item android:title="@string/about_author"
         android:id="@+id/mnu_about" />
+    <item android:id="@+id/mnu_settings"
+        android:title="@string/settings"/>
 </menu>

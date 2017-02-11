@@ -5,7 +5,7 @@
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
-    <color name="colorAccent">#FF80AB</color>
+    <color name="colorAccent">#3f51b5</color>
     <color name="color_tab_1">#2196f3</color>
     <color name="color_tab_2">#689F38</color>
     <color name="color_tab_3">#795548</color>
@@ -16,7 +16,7 @@
     <color name="buttonNormal">#039BE5</color>
     <color name="buttonPressed">#0288D1</color>
 
-    <color name="background_activity">#f1f8e9</color>
+    <color name="background_activity">#fffde7</color>
 
     <color name="splash_screen">#03A9F4</color>
 
