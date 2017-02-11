@@ -31,7 +31,6 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
  */
 
 public class MyFragment extends Fragment {
-    private TextView txt_fragment_id;
     private FrameLayout fragmentContainer;
 
     public static MyFragment newInstance(int index) {
@@ -195,25 +194,43 @@ public class MyFragment extends Fragment {
                     matA3.setMatrix(vals3);
                     Log.w("DET_A2", matA3.det() + "");
 
-//                    txt_ketqua.setVisibility(View.VISIBLE);
-//                    txt_result.setVisibility(View.VISIBLE);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    LayoutInflater inflater = getActivity().getLayoutInflater();
+                    builder.setView(inflater.inflate(R.layout.dialog_layout, null));
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
 
-                    if (matA.det().isZero()) txt_result.setText("Hệ phương trình không có nghiệm");
-                    else {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                        builder.setTitle("Kết quả")
-                                .setMessage("b0 = " + matA0.det().divide(matA.det()).toString() + "\n" +
-                                        "b1 = " + matA1.det().divide(matA.det()) + "\n" +
-                                        "b2 = " + matA2.det().divide(matA.det()) + "\n" +
-                                        "b3 = " + matA3.det().divide(matA.det()))
-                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        dialogInterface.dismiss();
-                                    }
-                                }).create().show();
+                    String result;
+                    if      (matA.det().isZero() &&
+                            !matA0.det().isZero() &&
+                            !matA1.det().isZero() &&
+                            !matA2.det().isZero() &&
+                            !matA3.det().isZero()) result = "Hệ phương trình vô nghiệm";
+                    else if (matA.det().isZero() &&
+                            matA0.det().isZero() &&
+                            matA1.det().isZero() &&
+                            matA2.det().isZero() &&
+                            matA3.det().isZero()) {
+                        result = "Hệ phương trình có vô số nghiệm";
+                    } else {
+                        result = "b0 = " + matA0.det().divide(matA.det()).toString() + "\n" +
+                                "b1 = " + matA1.det().divide(matA.det()) + "\n" +
+                                "b2 = " + matA2.det().divide(matA.det()) + "\n" +
+                                "b3 = " + matA3.det().divide(matA.det());
                     }
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
+                    TextView title = (TextView) dialog.findViewById(R.id.txt_title);
+                    TextView content = (TextView) dialog.findViewById(R.id.txt_content);
+
+                    title.setText("Kết Quả");
+                    content.setText(result);
 
                 } catch (Exception ex) {
                     Log.e("ERROR", ex.toString());
@@ -315,8 +332,15 @@ public class MyFragment extends Fragment {
                     txt_ketqua.setVisibility(View.VISIBLE);
                     txt_result.setVisibility(View.VISIBLE);
 
-                    if (matA.det().isZero()) txt_result.setText("Hệ phương trình không có nghiệm");
-                    else {
+                    if (matA.det().isZero()&&
+                            !matA0.det().isZero() &&
+                            !matA1.det().isZero()) txt_result.setText("Hệ phương trình không có nghiệm");
+                    else if (matA.det().isZero() &&
+                            matA0.det().isZero() &&
+                            matA1.det().isZero()
+                            ) {
+                        txt_result.setText("Hệ phương trình có vô số nghiệm");
+                    } else {
                         txt_result.setText("b0 = " + matA0.det().divide(matA.det()).toString() + "\n" +
                                 "b1 = " + matA1.det().divide(matA.det()));
                     }
@@ -441,7 +465,17 @@ public class MyFragment extends Fragment {
                     txt_ketqua.setVisibility(View.VISIBLE);
                     txt_result.setVisibility(View.VISIBLE);
 
-                    if (matA.det().isZero()) txt_result.setText("Hệ phương trình không có nghiệm");
+                    if (matA.det().isZero()&&
+                            !matA0.det().isZero() &&
+                            !matA1.det().isZero() &&
+                            !matA2.det().isZero()) txt_result.setText("Hệ phương trình không có nghiệm");
+                    else if (matA.det().isZero() &&
+                            matA0.det().isZero() &&
+                            matA1.det().isZero() &&
+                            matA2.det().isZero()
+                            )
+                        txt_result.setText("Hệ phương trình có vô số nghiệm");
+
                     else {
                         txt_result.setText("b0 = " + matA0.det().divide(matA.det()).toString() + "\n" +
                                 "b1 = " + matA1.det().divide(matA.det()) + "\n" +

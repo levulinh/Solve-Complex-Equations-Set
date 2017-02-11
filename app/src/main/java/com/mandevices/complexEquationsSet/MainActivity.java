@@ -7,13 +7,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -45,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.solve_three_var_equation_set);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+//        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
         initUI();
     }
 
@@ -86,17 +89,17 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (currentFragment != null) {
-                    currentFragment.willBeHidden();
+                    //currentFragment.willBeHidden();
                 }
 
                 if (position == 0) {
                     getSupportActionBar().setTitle(R.string.solve_2_equa_set);
                 } else if (position == 1) {
                     toolbar.setTitle(R.string.solve_3_equa_set);
-                    bottomNavigation.setNotification("", 1);
+                    //bottomNavigation.setNotification("", 1);
                 } else if (position == 2) {
                     toolbar.setTitle(R.string.solve_4_equa_set);
-                    bottomNavigation.setNotification("", 1);
+                    //bottomNavigation.setNotification("", 1);
                 } else
                     toolbar.setTitle(R.string.info);
 
@@ -110,6 +113,34 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setOffscreenPageLimit(4);
         adapter = new MyViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
+        viewPager.setPagingEnabled(true);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                bottomNavigation.setCurrentItem(position, false);
+                if (position == 0) {
+                    getSupportActionBar().setTitle(R.string.solve_2_equa_set);
+                } else if (position == 1) {
+                    toolbar.setTitle(R.string.solve_3_equa_set);
+                    //bottomNavigation.setNotification("", 1);
+                } else if (position == 2) {
+                    toolbar.setTitle(R.string.solve_4_equa_set);
+                    //bottomNavigation.setNotification("", 1);
+                } else
+                    toolbar.setTitle(R.string.info);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
         currentFragment = adapter.getCurrentFragment();
     }
 
@@ -125,11 +156,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (item.getItemId() == R.id.mnu_about) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle("Thông tin tác giả")
-                    .setMessage("Tác giả: Lê Vũ Linh\n" +
-                            "CTTT Điện-Điện Tử K59\n" +
-                            "ĐH Bách Khoa HN")
-                    .setPositiveButton("Đóng", new DialogInterface.OnClickListener() {
+            LayoutInflater inflater = MainActivity.this.getLayoutInflater();
+            builder.setView(inflater.inflate(R.layout.dialog_layout, null));
+            builder.setPositiveButton("Đóng", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
@@ -137,6 +166,15 @@ public class MainActivity extends AppCompatActivity {
                     });
             Dialog dialog = builder.create();
             dialog.show();
+
+            TextView txt_title = (TextView) dialog.findViewById(R.id.txt_title);
+            TextView txt_content = (TextView) dialog.findViewById(R.id.txt_content);
+
+            txt_title.setText("Thông tin tác giả");
+            txt_title.setBackgroundColor(getResources().getColor(R.color.buttonNormal));
+            txt_content.setText("Tác giả: Lê Vũ Linh\n" +
+                    "CTTT Điện-Điện Tử K59\n" +
+                    "ĐH Bách Khoa HN");
         }
         return true;
     }

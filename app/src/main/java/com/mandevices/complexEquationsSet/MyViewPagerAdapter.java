@@ -23,7 +23,7 @@ public class MyViewPagerAdapter extends FragmentPagerAdapter {
         fragments.add(MyFragment.newInstance(1));
         fragments.add(MyFragment.newInstance(2));
         fragments.add(MyFragment.newInstance(3));
-        fragments.add(MyFragment.newInstance(4));
+        //fragments.add(MyFragment.newInstance(4));
     }
 
     @Override
