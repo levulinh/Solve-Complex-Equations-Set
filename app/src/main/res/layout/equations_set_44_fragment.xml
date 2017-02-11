@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Nhập các hệ số dưới dạng số phức"
+            android:text="@string/input_instruction"
             android:textAlignment="center"
             android:textSize="20sp"
             android:textStyle="normal|bold" />
@@ -305,30 +305,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:background="@drawable/button"
-            android:text="Giải"
+            android:text="@string/solve"
             android:textColor="#ffffff"
-            android:textStyle="normal|bold" />
-
-        <TextView
-            android:id="@+id/txt_ketqua"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Kết quả"
-            android:textAlignment="center"
-            android:textSize="16sp"
             android:textStyle="normal|bold"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/txt_result"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="TextView"
-            android:textSize="18sp"
-            android:textStyle="normal|bold"
-            android:visibility="gone" />
+            android:textAllCaps="false" />
 
     </LinearLayout>
 </FrameLayout>

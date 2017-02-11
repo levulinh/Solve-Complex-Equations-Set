@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Hệ phương trình số phức</string>
+    <string name="tab_1">3 Ẩn</string>
+    <string name="tab_2">2 Ẩn</string>
+    <string name="tab_3">Thông tin</string>
+
+
+    <string name="title_activity_splash_screen">Hệ phương trình số phức</string>
+    <string name="solve_2_equa_set">Hệ phương trình 2 ẩn</string>
+    <string name="solve_3_equa_set">Hệ phương trình 3 ẩn</string>
+    <string name="solve_4_equa_set">Hệ phương trình 4 ẩn</string>
+    <string name="info">Thông tin</string>
+    <string name="solve">Giải</string>
+    <string name="input_instruction">Nhập các hệ số dưới dạng số phức</string>
+    <string name="txt_result">Kết quả</string>
+    <string name="no_root">Hệ phương trình vô nghiệm</string>
+    <string name="plenty_roots">Hệ phương trình có vô số nghiệm</string>
+    <string name="input_guide" >Hướng dẫn nhập liệu</string>
+    <string name="instruction">Các hệ số được nhập vào dưới dạng số phức.\nBạn có thể nhập dạng a+bi, a+bj, a, bi, bj\nHoặc chỉ cần a+b cho đơn giản.\nHoặc dạng số phức lượng giác rAphi.\n(Trong đó \'A\' hoặc \'a\' là phần phân cách giữa r và phi, phi tính bằng độ)</string>
+    <string name="example">Ví dụ:</string>
+    <string name="input_notice_error">Vui lòng nhập tất cả các ô (kể cả số 0)! Sau đó thử lại</string>
+    <string name="app_title">Ứng dụng giải hệ phương trnhf số phức</string>
+    <string name="error">Lỗi</string>
+    <string name="hold_to_clear">Giữ để xóa hết</string>
+    <string name="item_4_vars">4 Ẩn</string>
+    <string name="solve_three_var_equation_set">Hệ phương trình 3 ẩn</string>
+</resources>

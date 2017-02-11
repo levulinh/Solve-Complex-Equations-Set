@@ -1,18 +1,27 @@
 <resources>
-    <string name="app_name">Hệ Phương Trình Phức</string>
+    <string name="app_name">Complex number set of equations</string>
     <string name="tab_1">3 Vars</string>
     <string name="tab_2">2 Vars</string>
-    <string name="tab_3">Thông tin</string>
-    <string name="tab_4">Test</string>
-    <string name="tab_5">Back</string>
+    <string name="tab_3">Info</string>
 
-    <string name="title_activity_splash_screen">Hệ Phương Trình Phức</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="title_activity_splash_screen">Set of complex number equations</string>
     <string name="item_4_vars">4 Vars</string>
-    <string name="solve_three_var_equation_set">Giải hệ phức 3 ẩn</string>
-    <string name="solve_2_equa_set">Giải hệ phức 2 ẩn</string>
-    <string name="solve_3_equa_set">Giải hệ phức 3 ẩn</string>
-    <string name="solve_4_equa_set">Giải hệ phức 4 ẩn</string>
-    <string name="info">Thông tin</string>
+    <string name="solve_three_var_equation_set">Set of euqa. with 3 vars</string>
+    <string name="solve_2_equa_set">Set of equa. with 2 vars</string>
+    <string name="solve_3_equa_set">Set of equa. with 3 vars</string>
+    <string name="solve_4_equa_set">Set of equa. with 3 vars</string>
+    <string name="info">Information</string>
+    <string name="hold_to_clear">Hold to clear the matrix</string>
+    <string name="solve">" Solve"</string>
+    <string name="input_instruction">Enter the coefficients in the complex number form</string>
+    <string name="txt_result">Result</string>
+    <string name="no_root">The set has no root</string>
+    <string name="plenty_roots">The set has plenty of roots</string>
+    <string name="app_title">Solving Set of Equations in Complex Number Application</string>
+    <string name="input_guide" >Input instruction</string>
+    <string name="instruction">The coefficiences are typed in complex number form.\nYou can use a+bi, a+bj, a, bi, bj forms.\nOr just a+b for simplification.\nYou can also use the polar form rAphi\n(with \'A\' or \'a\' is the separator between r and phi, phi is in degree)</string>
+    <string name="example">Example:</string>
+    <string name="error">Error</string>
+    <string name="input_notice_error">Please fill in all the forms (include 0 value)! And then try again.</string>
 </resources>

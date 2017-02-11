@@ -100,8 +100,8 @@ public class MyFragment extends Fragment {
         m[3][3] = (EditText) view.findViewById(R.id.m33);
 
 
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 4; j++) {
                 m[i][j].setSingleLine(true);
             }
 
@@ -209,13 +209,13 @@ public class MyFragment extends Fragment {
                             !matA0.det().isZero() &&
                             !matA1.det().isZero() &&
                             !matA2.det().isZero() &&
-                            !matA3.det().isZero()) result = "Hệ phương trình vô nghiệm";
+                            !matA3.det().isZero()) result = getString(R.string.no_root);
                     else if (matA.det().isZero() &&
                             matA0.det().isZero() &&
                             matA1.det().isZero() &&
                             matA2.det().isZero() &&
                             matA3.det().isZero()) {
-                        result = "Hệ phương trình có vô số nghiệm";
+                        result = getString(R.string.plenty_roots);
                     } else {
                         result = "b0 = " + matA0.det().divide(matA.det()).toString() + "\n" +
                                 "b1 = " + matA1.det().divide(matA.det()) + "\n" +
@@ -229,15 +229,17 @@ public class MyFragment extends Fragment {
                     TextView title = (TextView) dialog.findViewById(R.id.txt_title);
                     TextView content = (TextView) dialog.findViewById(R.id.txt_content);
 
-                    title.setText("Kết Quả");
+                    title.setText(getResources().getText(R.string.txt_result));
                     content.setText(result);
+
+                    btn_solve.setText(R.string.hold_to_clear);
 
                 } catch (Exception ex) {
                     Log.e("ERROR", ex.toString());
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Lỗi");
-                    builder.setMessage("Vui lòng nhập đầy đủ các ô và thử lại! (kể cả số 0)");
+                    builder.setTitle(getResources().getText(R.string.error));
+                    builder.setMessage(getResources().getText(R.string.input_notice_error));
                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -247,6 +249,20 @@ public class MyFragment extends Fragment {
                     builder.create().show();
                 }
 
+            }
+        });
+
+        btn_solve.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                btn_solve.setText("solve");
+                for(int i=0; i<4; i++)
+                    for (int j=0; j<4; j++)
+                        m[i][j].setText("");
+                for(int i=0; i<4; i++)
+                    c[i].setText("");
+                m[0][0].requestFocus();
+                return true;
             }
         });
     }
@@ -334,23 +350,23 @@ public class MyFragment extends Fragment {
 
                     if (matA.det().isZero()&&
                             !matA0.det().isZero() &&
-                            !matA1.det().isZero()) txt_result.setText("Hệ phương trình không có nghiệm");
+                            !matA1.det().isZero()) txt_result.setText(getResources().getText(R.string.no_root));
                     else if (matA.det().isZero() &&
                             matA0.det().isZero() &&
                             matA1.det().isZero()
                             ) {
-                        txt_result.setText("Hệ phương trình có vô số nghiệm");
+                        txt_result.setText(getResources().getText(R.string.plenty_roots));
                     } else {
                         txt_result.setText("b0 = " + matA0.det().divide(matA.det()).toString() + "\n" +
                                 "b1 = " + matA1.det().divide(matA.det()));
                     }
-
+                    btn_solve.setText(getResources().getText(R.string.hold_to_clear));
                 } catch (Exception ex) {
                     Log.e("ERROR", ex.toString());
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Lỗi");
-                    builder.setMessage("Vui lòng nhập đầy đủ các ô và thử lại! (kể cả số 0)");
+                    builder.setTitle(getResources().getText(R.string.error));
+                    builder.setMessage(getResources().getText(R.string.input_notice_error));
                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -360,6 +376,20 @@ public class MyFragment extends Fragment {
                     builder.create().show();
                 }
 
+            }
+        });
+
+        btn_solve.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                btn_solve.setText(R.string.solve);
+                for(int i=0; i<2; i++)
+                    for (int j=0; j<2; j++)
+                        n[i][j].setText("");
+                for(int i=0; i<2; i++)
+                    c[i].setText("");
+                n[0][0].requestFocus();
+                return true;
             }
         });
     }
@@ -468,26 +498,26 @@ public class MyFragment extends Fragment {
                     if (matA.det().isZero()&&
                             !matA0.det().isZero() &&
                             !matA1.det().isZero() &&
-                            !matA2.det().isZero()) txt_result.setText("Hệ phương trình không có nghiệm");
+                            !matA2.det().isZero()) txt_result.setText(getResources().getString(R.string.no_root));
                     else if (matA.det().isZero() &&
                             matA0.det().isZero() &&
                             matA1.det().isZero() &&
                             matA2.det().isZero()
                             )
-                        txt_result.setText("Hệ phương trình có vô số nghiệm");
+                        txt_result.setText(getResources().getString(R.string.plenty_roots));
 
                     else {
                         txt_result.setText("b0 = " + matA0.det().divide(matA.det()).toString() + "\n" +
                                 "b1 = " + matA1.det().divide(matA.det()) + "\n" +
                                 "b2 = " + matA2.det().divide(matA.det()));
                     }
-
+                    btn_solve.setText(getResources().getText(R.string.solve));
                 } catch (Exception ex) {
                     Log.e("ERROR", ex.toString());
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Lỗi");
-                    builder.setMessage("Vui lòng nhập đầy đủ các ô và thử lại! (kể cả số 0)");
+                    builder.setTitle(R.string.error);
+                    builder.setMessage(R.string.input_notice_error);
                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -499,7 +529,19 @@ public class MyFragment extends Fragment {
 
             }
         });
-
+        btn_solve.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                btn_solve.setText(R.string.solve);
+                for(int i=0; i<3; i++)
+                    for (int j=0; j<3; j++)
+                        m[i][j].setText("");
+                for(int i=0; i<3; i++)
+                    c[i].setText("");
+                m[0][0].requestFocus();
+                return true;
+            }
+        });
 
     }
 

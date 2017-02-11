@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private AHBottomNavigation bottomNavigation;
     private AHBottomNavigationViewPager viewPager;
-    private FloatingActionButton fab;
+    private FloatingActionButton floatingActionButton;
     private MyFragment currentFragment;
     private MyViewPagerAdapter adapter;
 
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private void initUI() {
         bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
         viewPager = (AHBottomNavigationViewPager) findViewById(R.id.view_pager);
-        fab = (FloatingActionButton) findViewById(R.id.floating_action_button);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_action_button);
 
         /**
          * Thiết lập các item trong {@param bottomNavigation}
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigation.addItems(bottomNavigationItems);
 
-        bottomNavigation.manageFloatingActionButtonBehavior(fab);
+        bottomNavigation.manageFloatingActionButtonBehavior(floatingActionButton);
         bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
         bottomNavigation.setColored(true);
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 if (currentFragment != null) {
                     //currentFragment.willBeHidden();
                 }
+
 
                 if (position == 0) {
                     getSupportActionBar().setTitle(R.string.solve_2_equa_set);
