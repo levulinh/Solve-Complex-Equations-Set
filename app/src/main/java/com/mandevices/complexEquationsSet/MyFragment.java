@@ -1,8 +1,10 @@
 package com.mandevices.complexEquationsSet;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
@@ -32,6 +34,8 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public class MyFragment extends Fragment {
     private FrameLayout fragmentContainer;
+    private boolean isPolar = false;
+    private boolean isDegree = true;
 
     public static MyFragment newInstance(int index) {
         MyFragment fragment = new MyFragment();
@@ -47,15 +51,15 @@ public class MyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         int index = getArguments().getInt("index", 0);
 
-        if (index == 1) {
-            View view = inflater.inflate(R.layout.equations_set_33_fragment, container, false);
-            fragmentContainer = (FrameLayout) view.findViewById(R.id.fragment_parent);
-            initFragmentSet33(view);
-            return view;
-        } else if (index == 0) {
+        if (index == 0) {
             View view = inflater.inflate(R.layout.equations_set_22_fragment, container, false);
             fragmentContainer = (FrameLayout) view.findViewById(R.id.fragment_parent);
             initFragment22(view);
+            return view;
+        } else if (index == 1) {
+            View view = inflater.inflate(R.layout.equations_set_33_fragment, container, false);
+            fragmentContainer = (FrameLayout) view.findViewById(R.id.fragment_parent);
+            initFragmentSet33(view);
             return view;
         } else if (index == 2) {
             View view = inflater.inflate(R.layout.equations_set_44_fragment, container, false);
@@ -70,13 +74,304 @@ public class MyFragment extends Fragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    private void initFragment22(View view) {
+        final Button btn_solve = (Button) view.findViewById(R.id.btn_solve);
+        final EditText[][] n = new EditText[2][2];
+        final EditText[] c = new EditText[2];
+
+        final TextView txt_ketqua = (TextView) view.findViewById(R.id.txt_ketqua);
+        final TextView txt_result = (TextView) view.findViewById(R.id.txt_result);
+
+        n[0][0] = (EditText) view.findViewById(R.id.m00);
+        n[0][1] = (EditText) view.findViewById(R.id.m01);
+
+        n[1][0] = (EditText) view.findViewById(R.id.m10);
+        n[1][1] = (EditText) view.findViewById(R.id.m11);
+
+        for (int i = 0; i < 2; i++)
+            for (int j = 0; j < 2; j++) {
+                n[i][j].setSingleLine(true);
+            }
+
+        c[0] = (EditText) view.findViewById(R.id.c0);
+        c[1] = (EditText) view.findViewById(R.id.c1);
+        for (int i = 0; i < 2; i++) {
+            c[i].setSingleLine(true);
+        }
+        btn_solve.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(fragmentContainer.getWindowToken(), 0);
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                isPolar = preferences.getBoolean("pref_show_in_polar",false);
+                isDegree = preferences.getBoolean("pref_show_in_degree",true);
+                try {
+                    ComplexNumber[][] vals = new ComplexNumber[2][2];
+                    ComplexNumber[][] vals0 = new ComplexNumber[2][2];
+                    ComplexNumber[][] vals1 = new ComplexNumber[2][2];
+
+                    Matrix22 matA = new Matrix22();
+                    Matrix22 matA0 = new Matrix22();
+                    Matrix22 matA1 = new Matrix22();
+
+                    ComplexNumber[] valC = new ComplexNumber[3];
+
+                    for (int i = 0; i < 2; i++)
+                        valC[i] = ComplexNumber.parseCplx(c[i].getText().toString());
+
+                    //setup matA
+                    for (int i = 0; i < 2; i++) {
+                        for (int j = 0; j < 2; j++) {
+                            vals[i][j] = ComplexNumber.parseCplx(n[i][j].getText().toString());
+                        }
+                    }
+                    matA.setMatrix(vals);
+                    Log.w("DET_A", matA.det() + "");
+
+                    //setup matA0
+                    for (int i = 0; i < 2; i++) {
+                        for (int j = 0; j < 2; j++) {
+                            vals0[i][j] = new ComplexNumber();
+                            vals0[i][j].copyFrom(vals[i][j]);
+                        }
+                    }
+                    for (int i = 0; i < 2; i++)
+                        vals0[i][0].copyFrom(valC[i]);
+                    matA0.setMatrix(vals0);
+                    Log.w("DET_A0", matA0.det() + "");
+
+                    //setup matA1
+                    for (int i = 0; i < 2; i++) {
+                        for (int j = 0; j < 2; j++) {
+                            vals1[i][j] = new ComplexNumber();
+                            vals1[i][j].copyFrom(vals[i][j]);
+                        }
+                    }
+
+                    for (int i = 0; i < 2; i++)
+                        vals1[i][1].copyFrom(valC[i]);
+                    matA1.setMatrix(vals1);
+                    Log.w("DET_A1", matA1.det() + "");
+
+
+                    txt_ketqua.setVisibility(View.VISIBLE);
+                    txt_result.setVisibility(View.VISIBLE);
+
+                    if (matA.det().isZero() &&
+                            !matA0.det().isZero() &&
+                            !matA1.det().isZero())
+                        txt_result.setText(getResources().getText(R.string.no_root));
+                    else if (matA.det().isZero() &&
+                            matA0.det().isZero() &&
+                            matA1.det().isZero()
+                            ) {
+                        txt_result.setText(getResources().getText(R.string.plenty_roots));
+                    } else {
+                        String txt0 = isPolar?(isDegree?matA0.det().divide(matA.det()).toPolar():matA0.det().divide(matA.det()).toPolarRadian()):matA0.det().divide(matA.det()).toString();
+                        String txt1 = isPolar?(isDegree?matA1.det().divide(matA.det()).toPolar():matA1.det().divide(matA.det()).toPolarRadian()):matA1.det().divide(matA.det()).toString();
+                        txt_result.setText("b0 = " + txt0 + "\n" +
+                                "b1 = " + txt1);
+                    }
+                    btn_solve.setText(getResources().getText(R.string.hold_to_clear));
+                } catch (Exception ex) {
+                    Log.e("ERROR", ex.toString());
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle(getResources().getText(R.string.error));
+                    builder.setMessage(getResources().getText(R.string.input_notice_error));
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    builder.create().show();
+                }
+
+            }
+        });
+
+        btn_solve.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                btn_solve.setText(R.string.solve);
+                for (int i = 0; i < 2; i++)
+                    for (int j = 0; j < 2; j++)
+                        n[i][j].setText("");
+                for (int i = 0; i < 2; i++)
+                    c[i].setText("");
+                n[0][0].requestFocus();
+                return true;
+            }
+        });
+    }
+
+    private void initFragmentSet33(View view) {
+        final Button btn_solve = (Button) view.findViewById(R.id.btn_solve);
+        final EditText[][] m = new EditText[3][3];
+        final EditText[] c = new EditText[3];
+
+        final TextView txt_ketqua = (TextView) view.findViewById(R.id.txt_ketqua);
+        final TextView txt_result = (TextView) view.findViewById(R.id.txt_result);
+
+        m[0][0] = (EditText) view.findViewById(R.id.m00);
+        m[0][1] = (EditText) view.findViewById(R.id.m01);
+        m[0][2] = (EditText) view.findViewById(R.id.m02);
+
+        m[1][0] = (EditText) view.findViewById(R.id.m10);
+        m[1][1] = (EditText) view.findViewById(R.id.m11);
+        m[1][2] = (EditText) view.findViewById(R.id.m12);
+
+        m[2][0] = (EditText) view.findViewById(R.id.m20);
+        m[2][1] = (EditText) view.findViewById(R.id.m21);
+        m[2][2] = (EditText) view.findViewById(R.id.m22);
+
+        for (int i = 0; i < 3; i++)
+            for (int j = 0; j < 3; j++) {
+                m[i][j].setSingleLine(true);
+            }
+
+
+        c[0] = (EditText) view.findViewById(R.id.c0);
+        c[1] = (EditText) view.findViewById(R.id.c1);
+        c[2] = (EditText) view.findViewById(R.id.c2);
+        for (int i = 0; i < 3; i++) {
+            c[i].setSingleLine(true);
+        }
+        btn_solve.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(fragmentContainer.getWindowToken(), 0);
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                isPolar = preferences.getBoolean("pref_show_in_polar",false);
+                isDegree = preferences.getBoolean("pref_show_in_degree",true);
+                try {
+                    ComplexNumber[][] vals = new ComplexNumber[3][3];
+                    ComplexNumber[][] vals0 = new ComplexNumber[3][3];
+                    ComplexNumber[][] vals1 = new ComplexNumber[3][3];
+                    ComplexNumber[][] vals2 = new ComplexNumber[3][3];
+
+                    Matrix33 matA = new Matrix33();
+                    Matrix33 matA0 = new Matrix33();
+                    Matrix33 matA1 = new Matrix33();
+                    Matrix33 matA2 = new Matrix33();
+
+                    ComplexNumber[] valC = new ComplexNumber[3];
+
+                    for (int i = 0; i < 3; i++)
+                        valC[i] = ComplexNumber.parseCplx(c[i].getText().toString());
+
+                    //setup matA
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 3; j++) {
+                            vals[i][j] = ComplexNumber.parseCplx(m[i][j].getText().toString());
+                        }
+                    }
+                    matA.setMatrix(vals);
+                    Log.w("DET_A", matA.det() + "");
+
+                    //setup matA0
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 3; j++) {
+                            vals0[i][j] = new ComplexNumber();
+                            vals0[i][j].copyFrom(vals[i][j]);
+                        }
+                    }
+                    for (int i = 0; i < 3; i++)
+                        vals0[i][0].copyFrom(valC[i]);
+                    matA0.setMatrix(vals0);
+                    Log.w("DET_A0", matA0.det() + "");
+
+                    //setup matA1
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 3; j++) {
+                            vals1[i][j] = new ComplexNumber();
+                            vals1[i][j].copyFrom(vals[i][j]);
+                        }
+                    }
+
+                    for (int i = 0; i < 3; i++)
+                        vals1[i][1].copyFrom(valC[i]);
+                    matA1.setMatrix(vals1);
+                    Log.w("DET_A1", matA1.det() + "");
+
+                    //setup matA2
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 3; j++) {
+                            vals2[i][j] = new ComplexNumber();
+                            vals2[i][j].copyFrom(vals[i][j]);
+                        }
+                    }
+
+                    for (int i = 0; i < 3; i++)
+                        vals2[i][2].copyFrom(valC[i]);
+                    matA2.setMatrix(vals2);
+                    Log.w("DET_A2", matA2.det() + "");
+
+                    txt_ketqua.setVisibility(View.VISIBLE);
+                    txt_result.setVisibility(View.VISIBLE);
+
+                    if (matA.det().isZero() &&
+                            !matA0.det().isZero() &&
+                            !matA1.det().isZero() &&
+                            !matA2.det().isZero())
+                        txt_result.setText(getResources().getString(R.string.no_root));
+                    else if (matA.det().isZero() &&
+                            matA0.det().isZero() &&
+                            matA1.det().isZero() &&
+                            matA2.det().isZero()
+                            )
+                        txt_result.setText(getResources().getString(R.string.plenty_roots));
+
+                    else {
+                        String txt0 = isPolar?(isDegree?matA0.det().divide(matA.det()).toPolar():matA0.det().divide(matA.det()).toPolarRadian()):matA0.det().divide(matA.det()).toString();
+                        String txt1 = isPolar?(isDegree?matA1.det().divide(matA.det()).toPolar():matA1.det().divide(matA.det()).toPolarRadian()):matA1.det().divide(matA.det()).toString();
+                        String txt2 = isPolar?(isDegree?matA2.det().divide(matA.det()).toPolar():matA2.det().divide(matA.det()).toPolarRadian()):matA2.det().divide(matA.det()).toString();
+                        txt_result.setText("b0 = " + txt0 + "\n" +
+                                "b1 = " + txt1 + "\n" +
+                                "b2 = " + txt2);
+                    }
+                    btn_solve.setText(getResources().getText(R.string.solve));
+                } catch (Exception ex) {
+                    Log.e("ERROR", ex.toString());
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle(R.string.error);
+                    builder.setMessage(R.string.input_notice_error);
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    builder.create().show();
+                }
+
+            }
+        });
+        btn_solve.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                btn_solve.setText(R.string.solve);
+                for (int i = 0; i < 3; i++)
+                    for (int j = 0; j < 3; j++)
+                        m[i][j].setText("");
+                for (int i = 0; i < 3; i++)
+                    c[i].setText("");
+                m[0][0].requestFocus();
+                return true;
+            }
+        });
+
+    }
+
     private void initFragment44(View view) {
         final Button btn_solve = (Button) view.findViewById(R.id.btn_solve);
         final EditText[][] m = new EditText[4][4];
         final EditText[] c = new EditText[4];
-
-        final TextView txt_ketqua = (TextView) view.findViewById(R.id.txt_ketqua);
-        final TextView txt_result = (TextView) view.findViewById(R.id.txt_result);
 
         m[0][0] = (EditText) view.findViewById(R.id.m00);
         m[0][1] = (EditText) view.findViewById(R.id.m01);
@@ -105,17 +400,22 @@ public class MyFragment extends Fragment {
                 m[i][j].setSingleLine(true);
             }
 
+
         c[0] = (EditText) view.findViewById(R.id.c0);
         c[1] = (EditText) view.findViewById(R.id.c1);
         c[2] = (EditText) view.findViewById(R.id.c2);
         c[3] = (EditText) view.findViewById(R.id.c3);
-
+        for (int i = 0; i < 4; i++) {
+            c[i].setSingleLine(true);
+        }
         btn_solve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 InputMethodManager imm = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(fragmentContainer.getWindowToken(), 0);
-
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                isPolar = preferences.getBoolean("pref_show_in_polar",false);
+                isDegree = preferences.getBoolean("pref_show_in_degree",true);
                 try {
                     ComplexNumber[][] vals = new ComplexNumber[4][4];
                     ComplexNumber[][] vals0 = new ComplexNumber[4][4];
@@ -205,7 +505,7 @@ public class MyFragment extends Fragment {
                     });
 
                     String result;
-                    if      (matA.det().isZero() &&
+                    if (matA.det().isZero() &&
                             !matA0.det().isZero() &&
                             !matA1.det().isZero() &&
                             !matA2.det().isZero() &&
@@ -217,10 +517,14 @@ public class MyFragment extends Fragment {
                             matA3.det().isZero()) {
                         result = getString(R.string.plenty_roots);
                     } else {
-                        result = "b0 = " + matA0.det().divide(matA.det()).toString() + "\n" +
-                                "b1 = " + matA1.det().divide(matA.det()) + "\n" +
-                                "b2 = " + matA2.det().divide(matA.det()) + "\n" +
-                                "b3 = " + matA3.det().divide(matA.det());
+                        String txt0 = isPolar ? (isDegree ? matA0.det().divide(matA.det()).toPolar() : matA0.det().divide(matA.det()).toPolarRadian()) : matA0.det().divide(matA.det()).toString();
+                        String txt1 = isPolar ? (isDegree ? matA1.det().divide(matA.det()).toPolar() : matA1.det().divide(matA.det()).toPolarRadian()) : matA1.det().divide(matA.det()).toString();
+                        String txt2 = isPolar ? (isDegree ? matA2.det().divide(matA.det()).toPolar() : matA2.det().divide(matA.det()).toPolarRadian()) : matA2.det().divide(matA.det()).toString();
+                        String txt3 = isPolar ? (isDegree ? matA3.det().divide(matA.det()).toPolar() : matA3.det().divide(matA.det()).toPolarRadian()) : matA3.det().divide(matA.det()).toString();
+                        result = "b0 = " + txt0 + "\n" +
+                                "b1 = " + txt1 + "\n" +
+                                "b2 = " + txt2 + "\n" +
+                                "b3 = " + txt3;
                     }
 
                     AlertDialog dialog = builder.create();
@@ -256,293 +560,15 @@ public class MyFragment extends Fragment {
             @Override
             public boolean onLongClick(View view) {
                 btn_solve.setText("solve");
-                for(int i=0; i<4; i++)
-                    for (int j=0; j<4; j++)
+                for (int i = 0; i < 4; i++)
+                    for (int j = 0; j < 4; j++)
                         m[i][j].setText("");
-                for(int i=0; i<4; i++)
+                for (int i = 0; i < 4; i++)
                     c[i].setText("");
                 m[0][0].requestFocus();
                 return true;
             }
         });
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private void initFragment22(View view) {
-        final Button btn_solve = (Button) view.findViewById(R.id.btn_solve);
-        final EditText[][] n = new EditText[2][2];
-        final EditText[] c = new EditText[2];
-
-        final TextView txt_ketqua = (TextView) view.findViewById(R.id.txt_ketqua);
-        final TextView txt_result = (TextView) view.findViewById(R.id.txt_result);
-
-        n[0][0] = (EditText) view.findViewById(R.id.m00);
-        n[0][1] = (EditText) view.findViewById(R.id.m01);
-
-        n[1][0] = (EditText) view.findViewById(R.id.m10);
-        n[1][1] = (EditText) view.findViewById(R.id.m11);
-
-        for (int i = 0; i < 2; i++)
-            for (int j = 0; j < 2; j++) {
-                n[i][j].setSingleLine(true);
-            }
-
-        c[0] = (EditText) view.findViewById(R.id.c0);
-        c[1] = (EditText) view.findViewById(R.id.c1);
-
-        btn_solve.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(fragmentContainer.getWindowToken(), 0);
-
-                try {
-                    ComplexNumber[][] vals = new ComplexNumber[2][2];
-                    ComplexNumber[][] vals0 = new ComplexNumber[2][2];
-                    ComplexNumber[][] vals1 = new ComplexNumber[2][2];
-
-                    Matrix22 matA = new Matrix22();
-                    Matrix22 matA0 = new Matrix22();
-                    Matrix22 matA1 = new Matrix22();
-
-                    ComplexNumber[] valC = new ComplexNumber[3];
-
-                    for (int i = 0; i < 2; i++)
-                        valC[i] = ComplexNumber.parseCplx(c[i].getText().toString());
-
-                    //setup matA
-                    for (int i = 0; i < 2; i++) {
-                        for (int j = 0; j < 2; j++) {
-                            vals[i][j] = ComplexNumber.parseCplx(n[i][j].getText().toString());
-                        }
-                    }
-                    matA.setMatrix(vals);
-                    Log.w("DET_A", matA.det() + "");
-
-                    //setup matA0
-                    for (int i = 0; i < 2; i++) {
-                        for (int j = 0; j < 2; j++) {
-                            vals0[i][j] = new ComplexNumber();
-                            vals0[i][j].copyFrom(vals[i][j]);
-                        }
-                    }
-                    for (int i = 0; i < 2; i++)
-                        vals0[i][0].copyFrom(valC[i]);
-                    matA0.setMatrix(vals0);
-                    Log.w("DET_A0", matA0.det() + "");
-
-                    //setup matA1
-                    for (int i = 0; i < 2; i++) {
-                        for (int j = 0; j < 2; j++) {
-                            vals1[i][j] = new ComplexNumber();
-                            vals1[i][j].copyFrom(vals[i][j]);
-                        }
-                    }
-
-                    for (int i = 0; i < 2; i++)
-                        vals1[i][1].copyFrom(valC[i]);
-                    matA1.setMatrix(vals1);
-                    Log.w("DET_A1", matA1.det() + "");
-
-
-                    txt_ketqua.setVisibility(View.VISIBLE);
-                    txt_result.setVisibility(View.VISIBLE);
-
-                    if (matA.det().isZero()&&
-                            !matA0.det().isZero() &&
-                            !matA1.det().isZero()) txt_result.setText(getResources().getText(R.string.no_root));
-                    else if (matA.det().isZero() &&
-                            matA0.det().isZero() &&
-                            matA1.det().isZero()
-                            ) {
-                        txt_result.setText(getResources().getText(R.string.plenty_roots));
-                    } else {
-                        txt_result.setText("b0 = " + matA0.det().divide(matA.det()).toString() + "\n" +
-                                "b1 = " + matA1.det().divide(matA.det()));
-                    }
-                    btn_solve.setText(getResources().getText(R.string.hold_to_clear));
-                } catch (Exception ex) {
-                    Log.e("ERROR", ex.toString());
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle(getResources().getText(R.string.error));
-                    builder.setMessage(getResources().getText(R.string.input_notice_error));
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    });
-                    builder.create().show();
-                }
-
-            }
-        });
-
-        btn_solve.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                btn_solve.setText(R.string.solve);
-                for(int i=0; i<2; i++)
-                    for (int j=0; j<2; j++)
-                        n[i][j].setText("");
-                for(int i=0; i<2; i++)
-                    c[i].setText("");
-                n[0][0].requestFocus();
-                return true;
-            }
-        });
-    }
-
-    private void initFragmentSet33(View view) {
-        final Button btn_solve = (Button) view.findViewById(R.id.btn_solve);
-        final EditText[][] m = new EditText[3][3];
-        final EditText[] c = new EditText[3];
-
-        final TextView txt_ketqua = (TextView) view.findViewById(R.id.txt_ketqua);
-        final TextView txt_result = (TextView) view.findViewById(R.id.txt_result);
-
-        m[0][0] = (EditText) view.findViewById(R.id.m00);
-        m[0][1] = (EditText) view.findViewById(R.id.m01);
-        m[0][2] = (EditText) view.findViewById(R.id.m02);
-
-        m[1][0] = (EditText) view.findViewById(R.id.m10);
-        m[1][1] = (EditText) view.findViewById(R.id.m11);
-        m[1][2] = (EditText) view.findViewById(R.id.m12);
-
-        m[2][0] = (EditText) view.findViewById(R.id.m20);
-        m[2][1] = (EditText) view.findViewById(R.id.m21);
-        m[2][2] = (EditText) view.findViewById(R.id.m22);
-
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 3; j++) {
-                m[i][j].setSingleLine(true);
-            }
-
-        c[0] = (EditText) view.findViewById(R.id.c0);
-        c[1] = (EditText) view.findViewById(R.id.c1);
-        c[2] = (EditText) view.findViewById(R.id.c2);
-
-        btn_solve.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(fragmentContainer.getWindowToken(), 0);
-
-                try {
-                    ComplexNumber[][] vals = new ComplexNumber[3][3];
-                    ComplexNumber[][] vals0 = new ComplexNumber[3][3];
-                    ComplexNumber[][] vals1 = new ComplexNumber[3][3];
-                    ComplexNumber[][] vals2 = new ComplexNumber[3][3];
-
-                    Matrix33 matA = new Matrix33();
-                    Matrix33 matA0 = new Matrix33();
-                    Matrix33 matA1 = new Matrix33();
-                    Matrix33 matA2 = new Matrix33();
-
-                    ComplexNumber[] valC = new ComplexNumber[3];
-
-                    for (int i = 0; i < 3; i++)
-                        valC[i] = ComplexNumber.parseCplx(c[i].getText().toString());
-
-                    //setup matA
-                    for (int i = 0; i < 3; i++) {
-                        for (int j = 0; j < 3; j++) {
-                            vals[i][j] = ComplexNumber.parseCplx(m[i][j].getText().toString());
-                        }
-                    }
-                    matA.setMatrix(vals);
-                    Log.w("DET_A", matA.det() + "");
-
-                    //setup matA0
-                    for (int i = 0; i < 3; i++) {
-                        for (int j = 0; j < 3; j++) {
-                            vals0[i][j] = new ComplexNumber();
-                            vals0[i][j].copyFrom(vals[i][j]);
-                        }
-                    }
-                    for (int i = 0; i < 3; i++)
-                        vals0[i][0].copyFrom(valC[i]);
-                    matA0.setMatrix(vals0);
-                    Log.w("DET_A0", matA0.det() + "");
-
-                    //setup matA1
-                    for (int i = 0; i < 3; i++) {
-                        for (int j = 0; j < 3; j++) {
-                            vals1[i][j] = new ComplexNumber();
-                            vals1[i][j].copyFrom(vals[i][j]);
-                        }
-                    }
-
-                    for (int i = 0; i < 3; i++)
-                        vals1[i][1].copyFrom(valC[i]);
-                    matA1.setMatrix(vals1);
-                    Log.w("DET_A1", matA1.det() + "");
-
-                    //setup matA2
-                    for (int i = 0; i < 3; i++) {
-                        for (int j = 0; j < 3; j++) {
-                            vals2[i][j] = new ComplexNumber();
-                            vals2[i][j].copyFrom(vals[i][j]);
-                        }
-                    }
-
-                    for (int i = 0; i < 3; i++)
-                        vals2[i][2].copyFrom(valC[i]);
-                    matA2.setMatrix(vals2);
-                    Log.w("DET_A2", matA2.det() + "");
-
-                    txt_ketqua.setVisibility(View.VISIBLE);
-                    txt_result.setVisibility(View.VISIBLE);
-
-                    if (matA.det().isZero()&&
-                            !matA0.det().isZero() &&
-                            !matA1.det().isZero() &&
-                            !matA2.det().isZero()) txt_result.setText(getResources().getString(R.string.no_root));
-                    else if (matA.det().isZero() &&
-                            matA0.det().isZero() &&
-                            matA1.det().isZero() &&
-                            matA2.det().isZero()
-                            )
-                        txt_result.setText(getResources().getString(R.string.plenty_roots));
-
-                    else {
-                        txt_result.setText("b0 = " + matA0.det().divide(matA.det()).toString() + "\n" +
-                                "b1 = " + matA1.det().divide(matA.det()) + "\n" +
-                                "b2 = " + matA2.det().divide(matA.det()));
-                    }
-                    btn_solve.setText(getResources().getText(R.string.solve));
-                } catch (Exception ex) {
-                    Log.e("ERROR", ex.toString());
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle(R.string.error);
-                    builder.setMessage(R.string.input_notice_error);
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    });
-                    builder.create().show();
-                }
-
-            }
-        });
-        btn_solve.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                btn_solve.setText(R.string.solve);
-                for(int i=0; i<3; i++)
-                    for (int j=0; j<3; j++)
-                        m[i][j].setText("");
-                for(int i=0; i<3; i++)
-                    c[i].setText("");
-                m[0][0].requestFocus();
-                return true;
-            }
-        });
-
     }
 
     /**

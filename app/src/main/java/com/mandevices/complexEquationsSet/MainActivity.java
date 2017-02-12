@@ -2,20 +2,34 @@ package com.mandevices.complexEquationsSet;
 
 import android.annotation.TargetApi;
 import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
@@ -23,11 +37,11 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
     private ArrayList<AHBottomNavigationItem> bottomNavigationItems;
-
     private Toolbar toolbar;
     private AHBottomNavigation bottomNavigation;
     private AHBottomNavigationViewPager viewPager;
@@ -35,11 +49,16 @@ public class MainActivity extends AppCompatActivity {
     private MyFragment currentFragment;
     private MyViewPagerAdapter adapter;
 
+    private boolean colored = true;
+    private String language;
+    private String lastLanguage;
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -48,8 +67,14 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.solve_three_var_equation_set);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
+
         initUI();
+    }
+
+    private void restartActivity() {
+        Intent intent = new Intent(MainActivity.this, MainActivity.class);
+        finish();
+        startActivity(intent);
     }
 
     private void initUI() {
@@ -76,7 +101,9 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigation.manageFloatingActionButtonBehavior(floatingActionButton);
         bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
-        //bottomNavigation.setColored(true);
+
+        bottomNavigation.setColored(colored);
+
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
@@ -160,11 +187,11 @@ public class MainActivity extends AppCompatActivity {
             LayoutInflater inflater = MainActivity.this.getLayoutInflater();
             builder.setView(inflater.inflate(R.layout.dialog_layout, null));
             builder.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    });
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
             Dialog dialog = builder.create();
             dialog.show();
 
@@ -174,9 +201,84 @@ public class MainActivity extends AppCompatActivity {
             txt_title.setText(R.string.author_info);
             txt_title.setBackgroundColor(getResources().getColor(R.color.buttonNormal));
             txt_content.setText(getString(R.string.author_infor_content));
-        }else {
-            //TODO: lead to the setting menu
+        } else if (item.getItemId() == R.id.mnu_settings) {
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            LayoutInflater inflater = MainActivity.this.getLayoutInflater();
+            builder.setView(inflater.inflate(R.layout.dialog_tool_pi2float, null));
+            builder.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            final Dialog dialog = builder.create();
+            dialog.show();
+
+            final TextInputLayout layout_number = (TextInputLayout) dialog.findViewById(R.id.layout_number);
+            final EditText edt_number = (EditText) dialog.findViewById(R.id.edt_number);
+            final Button btn_convert = (Button) dialog.findViewById(R.id.btn_convert);
+            final TextView txt_convert_result = (TextView) dialog.findViewById(R.id.txt_convert_result);
+
+            btn_convert.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (edt_number.getText().toString().trim().equals("")) {
+                        layout_number.setError(getString(R.string.enter_number_error));
+                        edt_number.requestFocus();
+                    } else {
+                        txt_convert_result.setText(Float.parseFloat(edt_number.getText().toString()) * 3.1415926 + "");
+                        btn_convert.setText(R.string.hold_to_copy);
+                    }
+                }
+            });
+
+            btn_convert.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("Copied Text", txt_convert_result.getText().toString());
+                    clipboard.setPrimaryClip(clip);
+                    View view1 = findViewById(R.id.coordinator);
+                    Snackbar.make(view1, R.string.copied_to_clipboard, BaseTransientBottomBar.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    return true;
+                }
+            });
         }
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        getSharedPref();
+    }
+
+    public void getSharedPref() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        language = preferences.getString("pref_choose_language", "no");
+        lastLanguage = preferences.getString("pref_last_language", "no");
+        colored = preferences.getBoolean("pref_show_colors", true);
+        bottomNavigation.setColored(colored);
+
+
+        Log.w("LOCALE", colored + " " + language);
+        if (!language.equals(lastLanguage)) {
+            Locale myLocale = new Locale(language);
+            Locale.setDefault(myLocale);
+            android.content.res.Configuration config = new android.content.res.Configuration();
+            config.locale = myLocale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("pref_last_language", language);
+            editor.commit();
+
+            restartActivity();
+        }
     }
 }

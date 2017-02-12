@@ -4,8 +4,15 @@
     <string name="tab_2">2 Ẩn</string>
     <string name="tab_3">Thông tin</string>
 
-
-    <string name="title_activity_splash_screen">Hệ phương trình số phức</string>
+    <string-array name="languages">
+        <item>Tiếng Việt</item>
+        <item>English</item>
+    </string-array>
+    <string-array name="language_value">
+        <item>vi</item>
+        <item>en</item>
+    </string-array>
+    <string name="title_activity_splash_screen">Giải hệ phương trình số phức</string>
     <string name="solve_2_equa_set">Hệ phương trình 2 ẩn</string>
     <string name="solve_3_equa_set">Hệ phương trình 3 ẩn</string>
     <string name="solve_4_equa_set">Hệ phương trình 4 ẩn</string>
@@ -19,7 +26,7 @@
     <string name="instruction">Các hệ số được nhập vào dưới dạng số phức.\nBạn có thể nhập dạng a+bi, a+bj, a, bi, bj\nHoặc chỉ cần a+b cho đơn giản.\nHoặc dạng số phức lượng giác rAphi.\n(Trong đó \'A\' hoặc \'a\' là phần phân cách giữa r và phi, phi tính bằng độ)</string>
     <string name="example">Ví dụ:</string>
     <string name="input_notice_error">Vui lòng nhập tất cả các ô (kể cả số 0)! Sau đó thử lại</string>
-    <string name="app_title">Ứng dụng giải hệ phương trnhf số phức</string>
+    <string name="app_title">Ứng dụng giải hệ phương trình số phức</string>
     <string name="error">Lỗi</string>
     <string name="hold_to_clear">Giữ để xóa hết</string>
     <string name="item_4_vars">4 Ẩn</string>
@@ -29,4 +36,18 @@
     <string name="author_info">Thông tin tác giả</string>
     <string name="author_infor_content">Tác giả: Lê Vũ Linh\nĐại Học Bách Khoa Hà Nội\nCTTT- Điện Điện tử K59</string>
     <string name="close">Đóng</string>
+    <string name="my_name">Lê Vũ Linh</string>
+    <string name="language_chooser">Ngôn ngữ</string>
+    <string name="show_in_polar">Hiển thị kết quả ở dạng lượng giác</string>
+    <string name="show_color">Hiển thị màu trên thanh điều hướng</string>
+    <string name="appearance">Giao diện</string>
+    <string name="show_phi_in_degree">Hiển thị phi ở dạng độ</string>
+    <string name="pi2Float_converting_tool">Công cụ chuyển đôi pi2float</string>
+    <string name="hold_to_copy">Giữ để copy vào bộ nhớ</string>
+    <string name="enter_number_error">Vui lòng nhập vào một số và thử lại</string>
+    <string name="input_tool_guide">Bạn muốn nhân bao nhiêu với pi?</string>
+    <string name="tool_convert_pi">Công cụ chuyển đôi pi2float</string>
+    <string name="copied_to_clipboard">Đã sao chép vào bộ nhớ!</string>
+    <string name="convert">Chuyển đổi</string>
+    <string name="result_will_appear_here">Kết quả sẽ hiện ở đây</string>
 </resources>

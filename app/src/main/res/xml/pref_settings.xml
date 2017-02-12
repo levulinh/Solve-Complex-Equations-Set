@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:title="@string/language_chooser"
+        android:entries="@array/languages"
+        android:entryValues="@array/language_value"
+        android:key="pref_choose_language" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:title="@string/show_in_polar"
+        android:key="pref_show_in_polar" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:title="@string/show_phi_in_degree"
+        android:key="pref_show_in_degree"
+        android:summaryOn="Degree"
+        android:summaryOff="Radian" />
+    <PreferenceCategory android:title="@string/appearance">
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:title="@string/show_color"
+            android:key="pref_show_colors" />
+    </PreferenceCategory>
+</PreferenceScreen>

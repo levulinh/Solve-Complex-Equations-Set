@@ -29,7 +29,7 @@
             android:layout_width="120dp" />
 
         <TextView
-            android:text="Giải hệ phương trình\nsố phức"
+            android:text="@string/title_activity_splash_screen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageView"
@@ -44,7 +44,7 @@
     </LinearLayout>
 
     <TextView
-        android:text="Lê Vũ Linh"
+        android:text="@string/my_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView9"
@@ -60,5 +60,14 @@
         android:id="@+id/progressBar"
         android:layout_gravity="bottom"
         android:layout_marginTop="15dp" />
+
+    <TextView
+        android:text="Ultimate version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView7"
+        android:textAlignment="center"
+        android:textColor="#fff59d"
+        android:layout_marginTop="10dp" />
 
 </LinearLayout>

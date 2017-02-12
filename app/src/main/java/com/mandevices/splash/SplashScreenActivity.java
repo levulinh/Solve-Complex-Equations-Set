@@ -1,6 +1,7 @@
 package com.mandevices.splash;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -15,7 +16,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
@@ -24,7 +25,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    sleep(1000);
+                    sleep(1500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

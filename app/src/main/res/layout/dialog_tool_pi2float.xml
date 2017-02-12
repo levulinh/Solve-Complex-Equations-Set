@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="@string/pi2Float_converting_tool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_title"
+        android:textAlignment="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textSize="20sp"
+        android:textStyle="normal|bold"
+        android:textColor="#ffffff"
+        android:background="#66bb6a" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="0dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="10dp">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout_number"
+            android:layout_marginTop="15dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/input_tool_guide"
+                android:inputType="number|numberDecimal"
+                android:id="@+id/edt_number" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:text="@string/convert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_convert"
+            android:background="@drawable/button"
+            android:textColor="#ffffff"
+            android:textStyle="normal|bold"
+            android:layout_marginTop="15dp" />
+
+        <TextView
+            android:text="@string/result_will_appear_here"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_convert_result"
+            android:textAlignment="center"
+            android:textStyle="normal|bold"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

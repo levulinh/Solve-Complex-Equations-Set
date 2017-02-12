@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.1"
     defaultConfig {
-        applicationId "com.mandevices.bottomnavigationtest"
+        applicationId "com.mandevices.complexEquationsSet"
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
@@ -30,7 +30,7 @@ dependencies {
         compileSdkVersion 25
         buildToolsVersion "25.0.1"
         defaultConfig {
-            applicationId "com.mandevices.mdbottomnavigationwithviewpager"
+            applicationId "com.mandevices.complexEquationsSet"
             minSdkVersion 15
             targetSdkVersion 25
             versionCode 1
@@ -64,4 +64,9 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.1.1'
     compile 'com.android.support:gridlayout-v7:25.1.1'
     testCompile 'junit:junit:4.12'
+
+    compile 'com.google.firebase:firebase-core:10.0.1'
+    compile 'com.google.firebase:firebase-database:10.0.1'
+    compile 'com.google.firebase:firebase-messaging:10.0.1'
 }
+apply plugin: 'com.google.gms.google-services'
