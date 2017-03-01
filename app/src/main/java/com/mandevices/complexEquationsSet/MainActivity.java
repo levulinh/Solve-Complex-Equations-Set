@@ -36,6 +36,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -182,73 +183,138 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId() == R.id.mnu_about) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            LayoutInflater inflater = MainActivity.this.getLayoutInflater();
-            builder.setView(inflater.inflate(R.layout.dialog_layout, null));
-            builder.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-            Dialog dialog = builder.create();
-            dialog.show();
-
-            TextView txt_title = (TextView) dialog.findViewById(R.id.txt_title);
-            TextView txt_content = (TextView) dialog.findViewById(R.id.txt_content);
-
-            txt_title.setText(R.string.author_info);
-            txt_title.setBackgroundColor(getResources().getColor(R.color.buttonNormal));
-            txt_content.setText(getString(R.string.author_infor_content));
-        } else if (item.getItemId() == R.id.mnu_settings) {
-            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-            startActivity(intent);
-        } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            LayoutInflater inflater = MainActivity.this.getLayoutInflater();
-            builder.setView(inflater.inflate(R.layout.dialog_tool_pi2float, null));
-            builder.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-            final Dialog dialog = builder.create();
-            dialog.show();
-
-            final TextInputLayout layout_number = (TextInputLayout) dialog.findViewById(R.id.layout_number);
-            final EditText edt_number = (EditText) dialog.findViewById(R.id.edt_number);
-            final Button btn_convert = (Button) dialog.findViewById(R.id.btn_convert);
-            final TextView txt_convert_result = (TextView) dialog.findViewById(R.id.txt_convert_result);
-
-            btn_convert.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (edt_number.getText().toString().trim().equals("")) {
-                        layout_number.setError(getString(R.string.enter_number_error));
-                        edt_number.requestFocus();
-                    } else {
-                        txt_convert_result.setText(Float.parseFloat(edt_number.getText().toString()) * 3.1415926 + "");
-                        btn_convert.setText(R.string.hold_to_copy);
+        switch (item.getItemId()){
+            case R.id.mnu_about:
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                LayoutInflater inflater = MainActivity.this.getLayoutInflater();
+                builder.setView(inflater.inflate(R.layout.dialog_layout, null));
+                builder.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
                     }
-                }
-            });
+                });
+                Dialog dialog = builder.create();
+                dialog.show();
 
-            btn_convert.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText("Copied Text", txt_convert_result.getText().toString());
-                    clipboard.setPrimaryClip(clip);
-                    View view1 = findViewById(R.id.coordinator);
-                    Snackbar.make(view1, R.string.copied_to_clipboard, BaseTransientBottomBar.LENGTH_SHORT).show();
-                    dialog.dismiss();
-                    return true;
-                }
-            });
+                TextView txt_title = (TextView) dialog.findViewById(R.id.txt_title);
+                TextView txt_content = (TextView) dialog.findViewById(R.id.txt_content);
+
+                txt_title.setText(R.string.author_info);
+                txt_title.setBackgroundColor(getResources().getColor(R.color.buttonNormal));
+                txt_content.setText(getString(R.string.author_info_content));
+                break;
+            case R.id.mnu_settings:
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.mnu_convert_pi_tool:
+                AlertDialog.Builder builder2 = new AlertDialog.Builder(MainActivity.this);
+                LayoutInflater inflater2 = MainActivity.this.getLayoutInflater();
+                builder2.setView(inflater2.inflate(R.layout.dialog_tool_pi2float, null));
+                builder2.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                final AlertDialog dialog2 = builder2.create();
+                dialog2.show();
+
+                final TextInputLayout layout_number = (TextInputLayout) dialog2.findViewById(R.id.layout_number);
+                final EditText edt_number = (EditText) dialog2.findViewById(R.id.edt_number);
+                final Button btn_convert = (Button) dialog2.findViewById(R.id.btn_convert);
+                final TextView txt_convert_result = (TextView) dialog2.findViewById(R.id.txt_convert_result);
+
+                btn_convert.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        try{
+                            DecimalFormat df = new DecimalFormat(".####");
+                            txt_convert_result.setText(df.format(Float.parseFloat(edt_number.getText().toString())* 3.1415926) + "");
+                            btn_convert.setText(R.string.hold_to_copy);}
+                        catch (Exception ex){
+                            layout_number.setError(getString(R.string.enter_number_error));
+                            edt_number.requestFocus();
+                        }
+                    }
+                });
+
+                btn_convert.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                        ClipData clip = ClipData.newPlainText("Copied Text", txt_convert_result.getText().toString());
+                        clipboard.setPrimaryClip(clip);
+                        View view1 = findViewById(R.id.coordinator);
+                        Snackbar.make(view1, R.string.copied_to_clipboard, BaseTransientBottomBar.LENGTH_SHORT).show();
+                        dialog2.dismiss();
+                        return true;
+                    }
+                });
+                break;
+            /*case R.id.mnu_convert_polar_normal:
+                AlertDialog.Builder builder3 = new AlertDialog.Builder(MainActivity.this);
+                LayoutInflater inflater3 = MainActivity.this.getLayoutInflater();
+                builder3.setView(inflater3.inflate(R.layout.dialog_convert_forms, null));
+                builder3.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                final AlertDialog dialog3 = builder3.create();
+                dialog3.show();
+
+                TextInputLayout layout_polar = (TextInputLayout) dialog3.findViewById(R.id.layout_polar);
+                TextInputLayout layout_normal = (TextInputLayout) dialog3.findViewById(R.id.layout_normal);
+                final EditText edt_polar = (EditText) dialog3.findViewById(R.id.edt_polar);
+                final EditText edt_normal = (EditText) dialog3.findViewById(R.id.edt_normal);
+
+                edt_normal.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        try{
+//                            ComplexNumber.parseCplx(charSequence.toString());
+                            edt_polar.setText(ComplexNumber.parseCplx(charSequence.toString()).toPolar());
+                        }catch (Exception ex){
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
+                    }
+                });
+                edt_polar.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        try{
+                            edt_normal.setText(ComplexNumber.parseCplx(charSequence.toString()).toString());
+                        }catch (Exception ex){
+                            //do nothing
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
+                    }
+                });
+
+                break;*/
         }
-        return true;
+          return true;
     }
 
     @Override

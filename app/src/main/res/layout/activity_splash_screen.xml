@@ -19,7 +19,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            app:srcCompat="@drawable/calculator"
+            app:srcCompat="@drawable/flat_icon"
             android:id="@+id/imageView"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
@@ -51,7 +51,8 @@
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:gravity="bottom"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp"
+        android:visibility="invisible" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
@@ -62,7 +63,7 @@
         android:layout_marginTop="15dp" />
 
     <TextView
-        android:text="Ultimate version"
+        android:text="Entering the fun"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView7"

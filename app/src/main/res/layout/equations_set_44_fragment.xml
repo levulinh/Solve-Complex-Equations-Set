@@ -9,7 +9,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
-
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
@@ -298,7 +297,7 @@
                     android:id="@+id/c3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="c2" />
+                    android:hint="c3" />
             </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
@@ -313,6 +312,7 @@
             android:textColor="#ffffff"
             android:textStyle="normal|bold"
             android:textAllCaps="false" />
+
 
     </LinearLayout>
 </FrameLayout>
