@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragment_parent"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+             android:id="@+id/fragment_parent"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
+
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
@@ -17,7 +18,7 @@
             android:text="@string/input_instruction"
             android:textAlignment="center"
             android:textSize="20sp"
-            android:textStyle="normal|bold" />
+            android:textStyle="normal|bold"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,7 +36,8 @@
                     android:id="@+id/m00"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="a00" />
+                    android:hint="a00"
+                    />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -47,7 +49,8 @@
                     android:id="@+id/m01"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="a01" />
+                    android:hint="a01"
+                    />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -59,7 +62,8 @@
                     android:id="@+id/m02"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="a02" />
+                    android:hint="a02"
+                    />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -71,7 +75,8 @@
                     android:id="@+id/m03"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="a03" />
+                    android:hint="a03"
+                    />
             </android.support.design.widget.TextInputLayout>
 
 
@@ -85,7 +90,7 @@
                     android:id="@+id/c0"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="c0" />
+                    android:hint="c0"/>
             </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
@@ -106,7 +111,7 @@
                     android:id="@+id/m10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="a10" />
+                    android:hint="a10"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -118,7 +123,7 @@
                     android:id="@+id/m11"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="a11" />
+                    android:hint="a11"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -130,7 +135,7 @@
                     android:id="@+id/m12"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="a12" />
+                    android:hint="a12"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -142,7 +147,7 @@
                     android:id="@+id/m13"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="a13" />
+                    android:hint="a13"/>
             </android.support.design.widget.TextInputLayout>
 
 
@@ -156,7 +161,7 @@
                     android:id="@+id/c1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="c1" />
+                    android:hint="c1"/>
             </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
@@ -177,7 +182,7 @@
                     android:id="@+id/m20"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="a20" />
+                    android:hint="a20"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -189,7 +194,7 @@
                     android:id="@+id/m21"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="a21" />
+                    android:hint="a21"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -201,8 +206,9 @@
                     android:id="@+id/m22"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="a22" />
+                    android:hint="a22"/>
             </android.support.design.widget.TextInputLayout>
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -212,7 +218,7 @@
                     android:id="@+id/m23"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="a23" />
+                    android:hint="a23"/>
             </android.support.design.widget.TextInputLayout>
 
 
@@ -226,7 +232,7 @@
                     android:id="@+id/c2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="c2" />
+                    android:hint="c2"/>
             </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
@@ -247,7 +253,7 @@
                     android:id="@+id/m30"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="a20" />
+                    android:hint="a30"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -259,7 +265,7 @@
                     android:id="@+id/m31"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="a21" />
+                    android:hint="a31"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -271,7 +277,7 @@
                     android:id="@+id/m32"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="a22" />
+                    android:hint="a32"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -283,7 +289,7 @@
                     android:id="@+id/m33"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="a33" />
+                    android:hint="a33"/>
             </android.support.design.widget.TextInputLayout>
 
 
@@ -297,10 +303,11 @@
                     android:id="@+id/c3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="c3" />
+                    android:hint="c3"/>
             </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
+
 
         <Button
             android:id="@+id/btn_solve"
@@ -309,10 +316,9 @@
             android:layout_marginTop="15dp"
             android:background="@drawable/button"
             android:text="@string/solve"
+            android:textAllCaps="false"
             android:textColor="#ffffff"
-            android:textStyle="normal|bold"
-            android:textAllCaps="false" />
-
+            android:textStyle="normal|bold"/>
 
     </LinearLayout>
 </FrameLayout>

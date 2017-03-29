@@ -21,6 +21,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.Html;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,6 +38,7 @@ import android.widget.TextView;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
+import com.mandevices.complexEquationsSet.model.ComplexNumber;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -66,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.solve_three_var_equation_set);
+        toolbar.setNavigationIcon(R.drawable.ic_action_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -202,7 +207,8 @@ public class MainActivity extends AppCompatActivity {
 
                 txt_title.setText(R.string.author_info);
                 txt_title.setBackgroundColor(getResources().getColor(R.color.buttonNormal));
-                txt_content.setText(getString(R.string.author_info_content));
+                txt_content.setText(getString(R.string.author_infor_content));
+                
                 break;
             case R.id.mnu_settings:
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
@@ -253,66 +259,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 break;
-            /*case R.id.mnu_convert_polar_normal:
-                AlertDialog.Builder builder3 = new AlertDialog.Builder(MainActivity.this);
-                LayoutInflater inflater3 = MainActivity.this.getLayoutInflater();
-                builder3.setView(inflater3.inflate(R.layout.dialog_convert_forms, null));
-                builder3.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-                final AlertDialog dialog3 = builder3.create();
-                dialog3.show();
-
-                TextInputLayout layout_polar = (TextInputLayout) dialog3.findViewById(R.id.layout_polar);
-                TextInputLayout layout_normal = (TextInputLayout) dialog3.findViewById(R.id.layout_normal);
-                final EditText edt_polar = (EditText) dialog3.findViewById(R.id.edt_polar);
-                final EditText edt_normal = (EditText) dialog3.findViewById(R.id.edt_normal);
-
-                edt_normal.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        try{
-//                            ComplexNumber.parseCplx(charSequence.toString());
-                            edt_polar.setText(ComplexNumber.parseCplx(charSequence.toString()).toPolar());
-                        }catch (Exception ex){
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-
-                    }
-                });
-                edt_polar.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        try{
-                            edt_normal.setText(ComplexNumber.parseCplx(charSequence.toString()).toString());
-                        }catch (Exception ex){
-                            //do nothing
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-
-                    }
-                });
-
-                break;*/
         }
           return true;
     }

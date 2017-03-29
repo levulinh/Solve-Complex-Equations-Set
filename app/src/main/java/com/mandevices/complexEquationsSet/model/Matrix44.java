@@ -36,7 +36,7 @@ public class Matrix44 {
                     if (j != v){
                         dj++;
                         matrix3[di][dj] = new ComplexNumber();
-                        matrix3[di][dj].copyFrom(this.matrix[i][j]);
+                        matrix3[di][dj].cloneFrom(this.matrix[i][j]);
                     }
                 }
             }
@@ -50,7 +50,11 @@ public class Matrix44 {
         int j = -1;
         for(int i=0; i<4; i++){
             j*= -1;
-            cmplx = cmplx.add(this.toMatrix33(0,i).det().multiply(new ComplexNumber(j,0)));
+            cmplx = cmplx.add(
+                    this.toMatrix33(0,i).det()
+                    .multiply(new ComplexNumber(j,0))
+                            .multiply(this.matrix[0][i])
+            );
         }
         return cmplx;
     }
