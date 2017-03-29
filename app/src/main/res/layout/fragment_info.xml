@@ -6,58 +6,91 @@
 
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:padding="16dp">
 
         <TextView
-            android:text="@string/app_title"
+            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView"
+            android:text="@string/app_title"
             android:textAlignment="center"
             android:textSize="18sp"
-            android:textStyle="normal|bold" />
+            android:textStyle="normal|bold"/>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:padding="10dp"
             android:animationCache="false"
-            android:background="@drawable/back">
+            android:background="@drawable/back"
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <TextView
-                android:text="@string/input_guide"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/textView3"
-                android:textStyle="normal|bold" />
-
-            <TextView
-                android:text="@string/instruction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/input_guide"
+                android:textStyle="normal|bold"/>
+
+            <TextView
                 android:id="@+id/textView4"
-                android:layout_marginTop="5dp" />
-
-            <TextView
-                android:text="@string/example"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/instruction"/>
+
+            <TextView
                 android:id="@+id/textView5"
-                android:layout_marginTop="10dp"
-                android:textStyle="normal|bold" />
-
-            <TextView
-                android:text="3+2i, 3+2j, 3+i\n2a60, -3A120"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/example"
+                android:textStyle="normal|bold"/>
+
+            <TextView
                 android:id="@+id/textView6"
-                android:layout_marginTop="5dp" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="3+2i, 3+2j, 3+i\n2a60, -3A120"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="20dp">
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/product_info"/>
+
+            <Button
+                android:id="@+id/btn_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button"
+                android:text="@string/get_latest_version"
+                android:textColor="#ffffff"/>
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:text="@string/version_name"
+                android:textAlignment="center"/>
         </LinearLayout>
 
     </LinearLayout>
+
 </FrameLayout>

@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Com-set solver</string>
+    <string name="app_name">Hệ phương trình số phức</string>
     <string name="tab_1">3 Ẩn</string>
     <string name="tab_2">2 Ẩn</string>
-    <string name="tab_3">Thông tin</string>
+    <string name="tab_3">Hướng dẫn</string>
 
     <string-array name="languages">
         <item>Tiếng Việt</item>
@@ -23,9 +23,9 @@
     <string name="no_root">Hệ phương trình vô nghiệm</string>
     <string name="plenty_roots">Hệ phương trình có vô số nghiệm</string>
     <string name="input_guide" >Hướng dẫn nhập liệu</string>
-    <string name="instruction">Các hệ số được nhập vào dưới dạng số phức.\nBạn có thể nhập dạng a+bi, a+bj, a, bi, bj\nHoặc chỉ cần a+b cho đơn giản.\nHoặc dạng số phức lượng giác rAphi.\n(Trong đó \'A\' hoặc \'a\' là phần phân cách giữa r và phi, phi tính bằng độ)\nphi mặc định ở dạng độ, bạn có thể nhập dạng radian của phi bằng cách thêm r vào cuối số\nVí dụ: 8a23.5r cho phi = 23.5 rad</string>
+    <string name="instruction">Các hệ số được nhập vào dưới dạng số phức.\nBạn có thể nhập dạng a+bi, a+bj, a, bi, bj\nHoặc chỉ cần a+b cho đơn giản.\nHoặc dạng số phức lượng giác rAphi.\n(Trong đó \'A\' hoặc \'a\' là phần phân cách giữa r và phi, phi tính bằng độ ở mặc định)\nLưu ý: Ở dạng lượng giác, nhập -rAphi sẽ tương đương -(rAphi)</string>
     <string name="example">Ví dụ:</string>
-    <string name="input_notice_error">Vui lòng nhập tất cả các ô (kể cả số 0)! Sau đó thử lại</string>
+    <string name="input_notice_error">Lỗi khi thực hiện giải hệ.\nVui lòng kiểm tra lại các hệ số rồi thử lại.</string>
     <string name="app_title">Ứng dụng giải hệ phương trình số phức</string>
     <string name="error">Lỗi</string>
     <string name="hold_to_clear">Giữ để xóa hết</string>
@@ -34,7 +34,7 @@
     <string name="about_author">Về tác giả</string>
     <string name="settings">Cài đặt</string>
     <string name="author_info">Thông tin tác giả</string>
-    <string name="author_info_content">Tác giả: Lê Vũ Linh\nĐại Học Bách Khoa Hà Nội\nCTTT- Điện Điện tử K59</string>
+    <string name="author_infor_content">Tác giả: Lê Vũ Linh\nĐại học Bách Khoa Hà Nội\nCTTT Điện Điện tử K59\n\nLiên hệ và phản hồi tại:\nEmail: Levulinhbk@gmail.com\nFB: fb.com/levulinhbk</string>
     <string name="close">Đóng</string>
     <string name="my_name">Lê Vũ Linh</string>
     <string name="language_chooser">Ngôn ngữ</string>
@@ -42,7 +42,7 @@
     <string name="show_color">Hiển thị màu trên thanh điều hướng</string>
     <string name="appearance">Giao diện</string>
     <string name="show_phi_in_degree">Hiển thị phi ở dạng độ</string>
-    <string name="pi2Float_converting_tool">Công cụ chuyển đôi pi2float</string>
+    <string name="pi2Float_converting_tool">Công cụ chuyển đổi pi2float</string>
     <string name="hold_to_copy">Giữ để copy vào bộ nhớ</string>
     <string name="enter_number_error">Vui lòng nhập vào một số và thử lại</string>
     <string name="input_tool_guide">Bạn muốn nhân bao nhiêu với pi?</string>
@@ -51,4 +51,11 @@
     <string name="convert">Chuyển đổi</string>
     <string name="result_will_appear_here">Kết quả sẽ hiện ở đây</string>
     <string name="mnu_covert_polar_to_normal" >Chuyển dạng  lượng giác sang giạng thường</string>
+    <string name="product_info">ManDevices LAB</string>
+    <string name="get_latest_version">Kiểm tra cập nhật</string>
+    <string name="functional_features">Tính năng chính</string>
+    <string name="smart_for_LC">Tính năng thông minh cho Lý Thuyết Mạch</string>
+    <string name="pref_title_autofill_enable">Tự Động Điền Thông Minh</string>
+    <string name="pref_title_auto_fill">Bật Tự Động Điền Thông Minh</string>
+    <string name="version_name">v2.3.1.2</string>
 </resources>

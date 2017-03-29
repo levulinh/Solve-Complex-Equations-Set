@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <PreferenceCategory android:title="@string/functional_features">
     <ListPreference
         android:title="@string/language_chooser"
         android:entries="@array/languages"
@@ -17,6 +17,15 @@
         android:key="pref_show_in_degree"
         android:summaryOn="Degree"
         android:summaryOff="Radian" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/smart_for_LC">
+    <SwitchPreference
+        android:defaultValue="false"
+        android:title="@string/pref_title_auto_fill"
+        android:key="pref_auto_fill"
+        android:summaryOn="ON"
+        android:summaryOff="OFF" />
+    </PreferenceCategory>
     <PreferenceCategory android:title="@string/appearance">
 
         <SwitchPreference
